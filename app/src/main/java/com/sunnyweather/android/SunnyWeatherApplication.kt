@@ -14,7 +14,7 @@ class SunnyWeatherApplication : Application() {
     companion object {
 
         //令牌值
-        const val TOKEN = "填入申请的令牌值"
+        const val TOKEN = "jmRRHNDEP5Bo7K3u"
 
         //注解标记不会内存泄露
         @SuppressLint("StaticFieldLeak")
