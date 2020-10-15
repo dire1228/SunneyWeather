@@ -1,6 +1,8 @@
 package com.sunnyweather.android.logic
 
+import android.util.Log
 import androidx.lifecycle.liveData
+import com.sunnyweather.android.LogUtil
 import com.sunnyweather.android.logic.model.Place
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.network.SunnyWeatherNetwork
@@ -17,6 +19,7 @@ object Respository {
             val placeResponse = SunnyWeatherNetwork.searchPlaces(query)
             if (placeResponse.status == "ok") {
                 val places = placeResponse.places
+                LogUtil.v("Respository", "---place是${places}")
                 Result.success(places)
             } else {
                 Result.failure(RuntimeException("报错：response status is ${placeResponse.status}"))
@@ -27,6 +30,7 @@ object Respository {
 
             coroutineScope {
                 val deferredRealtime = async {
+                    LogUtil.v("Respository", "---lng为${lng}, lat为${lat}")
                     SunnyWeatherNetwork.getRealtimeWeather(lng, lat)
                 }
                 val deferredDaily = async {

@@ -16,6 +16,8 @@ class SunnyWeatherApplication : Application() {
         //令牌值
         const val TOKEN = "jmRRHNDEP5Bo7K3u"
 
+
+
         //注解标记不会内存泄露
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context

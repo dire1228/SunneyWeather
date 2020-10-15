@@ -1,6 +1,7 @@
 package com.sunnyweather.android.ui.place
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunnyweather.android.LogUtil
 import com.sunnyweather.android.R
 import kotlinx.android.synthetic.main.fragment_place.*
 
@@ -36,6 +38,7 @@ class PlaceFragment : Fragment() {
         recyclerView.adapter = adapter
         searchPlaceEdit.addTextChangedListener { editable ->
             val content = editable.toString()
+            Log.d("PlaceFragment", "---content为：${content}")
             if (content.isNotEmpty()) {
                 viewModel.searchPlace(content)
             } else {
@@ -48,11 +51,13 @@ class PlaceFragment : Fragment() {
 
         viewModel.placeLiveData.observe(viewLifecycleOwner, Observer {result ->
             val places = result.getOrNull()
+            LogUtil.v("PlaceFragment", "---viewModel.placeLiveData.observe检测的places为${places}")
             if (places != null) {
                 recyclerView.visibility = View.VISIBLE
                 bgImageView.visibility = View.GONE
                 viewModel.placeList.clear()
                 viewModel.placeList.addAll(places)
+
                 adapter.notifyDataSetChanged()
             } else {
                 Toast.makeText(activity, "未能查到任何地点", Toast.LENGTH_SHORT).show()
