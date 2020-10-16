@@ -38,6 +38,7 @@ object Respository {
                 }
                 val realtimeResponse = deferredRealtime.await()
                 val dailyResponse = deferredDaily.await()
+                LogUtil.v("Respository", "---dailyResponse是${dailyResponse}")
                 if (realtimeResponse.status == "ok" && dailyResponse.status == "ok") {
                     val weather = Weather(realtimeResponse.result.realtime, dailyResponse.result.daily)
                     Result.success(weather)

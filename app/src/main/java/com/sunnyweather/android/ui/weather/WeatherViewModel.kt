@@ -17,7 +17,7 @@ class WeatherViewModel : ViewModel() {
     var locationLng = ""
     var locationLat = ""
     var placeName = ""
-    //
+    //转换数据
     val weatherLiveData = Transformations.switchMap(locationLiveData) { location ->
         LogUtil.v("WeatherViewModel", "---weatherLiveData lng为${location.lng}, lat为${location.lat}")
         Respository.refreshWeather(location.lng, location.lat)

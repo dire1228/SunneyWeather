@@ -33,6 +33,9 @@ class PlaceAdapter(private val fragment: Fragment, private val placeList: List<P
                 putExtra("location_lat", place.location.lat)
                 LogUtil.v("PlaceAdapter", "----place.location.lat为：${place.location.lat}, place.location.lng为：${place.location.lng}")
                 putExtra("place_name", place.name)
+                val lat = getStringExtra("location_lat")
+                val lng = getStringExtra("location_lng")
+                LogUtil.v("PlaceAdapter", "---获取lat为${lat}, 获取lng为${lng}")
             }
             fragment.startActivity(intent)
         }
