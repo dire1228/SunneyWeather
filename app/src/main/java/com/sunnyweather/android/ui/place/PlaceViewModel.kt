@@ -24,4 +24,13 @@ class PlaceViewModel : ViewModel() {
         searchLiveData.value = query
     }
 
+    /**
+     * 对Respository层的接口封装
+     * savePlace保存位置
+     * getSavePlace获取保存位置
+     * isPlaceSaved判断案是否保存
+     */
+    fun savePlace(place: Place) = Respository.savePlace(place)
+    fun getSavedPlace() = Respository.getSavePlace()
+    fun isPlaceSaved() = Respository.isPlaceSaved()
 }

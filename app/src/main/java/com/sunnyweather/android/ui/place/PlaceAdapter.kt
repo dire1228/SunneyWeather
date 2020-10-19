@@ -14,7 +14,7 @@ import com.sunnyweather.android.logic.model.Place
 import com.sunnyweather.android.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.place_item.view.*
 
-class PlaceAdapter(private val fragment: Fragment, private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
+class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) :RecyclerView.ViewHolder(view) {
         val placeName : TextView = view.findViewById(R.id.placeName)
@@ -37,7 +37,10 @@ class PlaceAdapter(private val fragment: Fragment, private val placeList: List<P
                 val lng = getStringExtra("location_lng")
                 LogUtil.v("PlaceAdapter", "---获取lat为${lat}, 获取lng为${lng}")
             }
+            //存储选择的位置
+            fragment.viewModel.savePlace(place)
             fragment.startActivity(intent)
+            fragment.activity?.finish()
         }
         return holder
     }

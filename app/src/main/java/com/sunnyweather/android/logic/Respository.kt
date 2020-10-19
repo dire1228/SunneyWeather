@@ -3,6 +3,7 @@ package com.sunnyweather.android.logic
 import android.util.Log
 import androidx.lifecycle.liveData
 import com.sunnyweather.android.LogUtil
+import com.sunnyweather.android.logic.dao.PlaceDao
 import com.sunnyweather.android.logic.model.Place
 import com.sunnyweather.android.logic.model.Weather
 import com.sunnyweather.android.logic.network.SunnyWeatherNetwork
@@ -13,6 +14,9 @@ import java.lang.Exception
 import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * 仓库层
+ */
 object Respository {
 
     fun searchPlace(query: String) = fire(Dispatchers.IO) {
@@ -62,5 +66,15 @@ object Respository {
             }
             emit(result)
         }
+
+    /**
+     * 对PlaceDao层的接口封装
+     * savePlace保存位置
+     * getSavePlace获取保存位置
+     * isPlaceSaved判断案是否保存
+     */
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+    fun getSavePlace() = PlaceDao.getSavedPlace()
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
 
 }
