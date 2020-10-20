@@ -31,7 +31,7 @@ object PlaceDao {
     /**
      * 是否有存储
      */
-    fun isPlaceSaved() = sharedPreferences().contains("palce")
+    fun isPlaceSaved() = sharedPreferences().contains("pl.ace")
 
     /**
      * 创建SharePreference

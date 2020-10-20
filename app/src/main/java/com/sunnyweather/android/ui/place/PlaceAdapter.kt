@@ -12,6 +12,7 @@ import com.sunnyweather.android.LogUtil
 import com.sunnyweather.android.R
 import com.sunnyweather.android.logic.model.Place
 import com.sunnyweather.android.ui.weather.WeatherActivity
+import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.place_item.view.*
 
 class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: List<Place>) : RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -28,19 +29,29 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
             val position = holder.adapterPosition
             LogUtil.v("PlaceAdapter", "---position为${position}")
             val place = placeList[position]
-            val intent = Intent(parent.context, WeatherActivity::class.java).apply {
-                putExtra("location_lng", place.location.lng)
-                putExtra("location_lat", place.location.lat)
-                LogUtil.v("PlaceAdapter", "----place.location.lat为：${place.location.lat}, place.location.lng为：${place.location.lng}")
-                putExtra("place_name", place.name)
-                val lat = getStringExtra("location_lat")
-                val lng = getStringExtra("location_lng")
-                LogUtil.v("PlaceAdapter", "---获取lat为${lat}, 获取lng为${lng}")
+            val activity = fragment.activity
+            //如果是天气界面，则刷新天气
+            if (activity is WeatherActivity) {
+                activity.drawerLayout.closeDrawers()
+                activity.viewModel.locationLng = place.location.lng
+                activity.viewModel.locationLat = place.location.lat
+                activity.viewModel.placeName = place.name
+                activity.refreshWeather()
+            } else {
+                val intent = Intent(parent.context, WeatherActivity::class.java).apply {
+                    putExtra("location_lng", place.location.lng)
+                    putExtra("location_lat", place.location.lat)
+                    LogUtil.v("PlaceAdapter", "----place.location.lat为：${place.location.lat}, place.location.lng为：${place.location.lng}")
+                    putExtra("place_name", place.name)
+                    val lat = getStringExtra("location_lat")
+                    val lng = getStringExtra("location_lng")
+                    LogUtil.v("PlaceAdapter", "---获取lat为${lat}, 获取lng为${lng}")
+                }
+                fragment.startActivity(intent)
+                fragment.activity?.finish()
             }
             //存储选择的位置
             fragment.viewModel.savePlace(place)
-            fragment.startActivity(intent)
-            fragment.activity?.finish()
         }
         return holder
     }
