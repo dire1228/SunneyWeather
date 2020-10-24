@@ -45,6 +45,7 @@ object Respository {
                 LogUtil.v("Respository", "---dailyResponse是${dailyResponse}")
                 if (realtimeResponse.status == "ok" && dailyResponse.status == "ok") {
                     val weather = Weather(realtimeResponse.result.realtime, dailyResponse.result.daily)
+                    LogUtil.v("Respository", "--- realtime:${realtimeResponse.result.realtime} \n daily:${dailyResponse.result.daily}")
                     Result.success(weather)
                 } else {
                     Result.failure(

@@ -103,20 +103,24 @@ class WeatherActivity : AppCompatActivity() {
         placeName.text = viewModel.placeName
         val realtime = weather.realtime
         val daily = weather.daily
+        LogUtil.v("WeatherActivity", "---daily是${daily}")
         //填充now.xml布局
         val currentTempText = "${realtime.temperature.toInt()}℃"
         currentTemp.text = currentTempText
         currentSky.text = getSky(realtime.skycon).info
         val currentPM25Text = currentTempText
-        currentSky.text = currentPM25Text
+        LogUtil.v("WeatherActivity", "---currentPM25Text是${currentPM25Text}")
+        currentAQI.text = currentPM25Text
         nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
         LogUtil.v("WeatherActivity", "---填充now.xml布局 完毕")
         //填充forecast.xml布局中的数据
         forecastLayout.removeAllViews()
         LogUtil.v("WeatherActivity", "---forecastLayout.removeAllViews() 完毕")
         val days = daily.skycon.size
+        LogUtil.v("WeatherActivity", "---daily.skycon是 ${daily.skycon}")
+        LogUtil.v("WeatherActivity", "---daily.skycon.size是 ${days}")
         //抛了一个java.lang.IllegalArgumentException异常，没有被捕获
-        try {
+//        try {
             for (i in 0 until days) {
                 LogUtil.v("WeatherActivity", "---填充forecast.xml布局中的数据--循环开始 ${i}")
                 val skycon = daily.skycon[i]
@@ -125,11 +129,14 @@ class WeatherActivity : AppCompatActivity() {
                 val dateInfo = view.findViewById(R.id.dateInfo) as TextView
                 val skyIcon = view.findViewById(R.id.skyIcon) as ImageView
                 val temperatureInfo = view.findViewById(R.id.temperatureInfo) as TextView
+                val skyInfo = view.findViewById(R.id.skyInfo) as TextView
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 dateInfo.text = simpleDateFormat.format(skycon.date)
                 val sky = getSky(skycon.value)
                 skyIcon.setImageResource(sky.icon)
                 LogUtil.v("WeatherActivity", "---sky.info是${sky.info}")
+                LogUtil.v("WeatherActivity", "---skyInfo是${skyInfo}")
+                LogUtil.v("WeatherActivity", "---temperature是${temperatureInfo}")
                 skyInfo.text = sky.info
 //            skyInfo.text = "晴"
                 LogUtil.v("WeatherActivity", "---skyInfo是${skyInfo.text}")
@@ -139,9 +146,9 @@ class WeatherActivity : AppCompatActivity() {
                 temperatureInfo.text = tempText
                 forecastLayout.addView(view)
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
 
         //填充Life_index.xml布局中的数据
         val lifeIndex = daily.lifeIndex
