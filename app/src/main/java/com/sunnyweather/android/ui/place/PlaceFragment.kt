@@ -36,6 +36,7 @@ class PlaceFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        LogUtil.v("PlaceFragment", "---activity is mainactivity 是 ${activity is MainActivity} ,viewModel.isPlaceSaved() 是 ${viewModel.isPlaceSaved()}")
         //读取存储的位置
         if (activity is MainActivity && viewModel.isPlaceSaved()) {
             LogUtil.v("PlaceFragment", "---读取存储的位置信息")

@@ -3,6 +3,10 @@ package com.sunnyweather.android.logic.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * 创建Retrofit构建器
+ */
+
 object ServiceCreater {
 
     private const val BASE_URL = "https://api.caiyunapp.com/"

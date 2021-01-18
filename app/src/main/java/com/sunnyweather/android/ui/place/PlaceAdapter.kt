@@ -48,7 +48,7 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
                     LogUtil.v("PlaceAdapter", "---获取lat为${lat}, 获取lng为${lng}")
                 }
                 fragment.startActivity(intent)
-                fragment.activity?.finish()
+                activity?.finish()
             }
             //存储选择的位置
             fragment.viewModel.savePlace(place)
