@@ -35,12 +35,14 @@ class WeatherActivity : AppCompatActivity() {
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //将背景图与UI融合在一起
         val decorView = window.decorView
         //布局会显示在状态栏上
         decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         //将状态栏设置为透明色
         window.statusBarColor = Color.TRANSPARENT
         setContentView(R.layout.activity_weather)
+        //从intent中取数据，赋值
         if (viewModel.locationLng.isEmpty()) {
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
             LogUtil.v("WeatherActivity", "---lat为空，设置值${viewModel.locationLng}")
