@@ -9,6 +9,9 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ *生成提供功能的方法
+ */
 object SunnyWeatherNetwork {
 
     private val weatherService = ServiceCreater.create(WeatherService::class.java)
@@ -16,7 +19,6 @@ object SunnyWeatherNetwork {
     suspend fun getRealtimeWeather(lng: String, lat: String) = weatherService.getRealtimeWeather(lng, lat).await()
 
     private val placeService = ServiceCreater.create(PlaceService::class.java)
-
     suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
 
     private suspend fun <T> Call<T>.await(): T {
