@@ -3,6 +3,7 @@ package com.sunnyweather.android.logic.dao
 import android.content.Context
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.sunnyweather.android.LogUtil
 import com.sunnyweather.android.SunnyWeatherApplication
 import com.sunnyweather.android.logic.model.Place
 
@@ -25,13 +26,14 @@ object PlaceDao {
      */
     fun getSavedPlace(): Place {
         val placeJson = sharedPreferences().getString("place", "")
+        LogUtil.v("PlaceDao", "---获取存储位置${placeJson}")
         return Gson().fromJson(placeJson, Place::class.java)
     }
 
     /**
      * 是否有存储
      */
-    fun isPlaceSaved() = sharedPreferences().contains("pl.ace")
+    fun isPlaceSaved() = sharedPreferences().contains("place")
 
     /**
      * 创建SharePreference

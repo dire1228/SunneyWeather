@@ -8,12 +8,16 @@ import com.sunnyweather.android.LogUtil
 import com.sunnyweather.android.logic.Respository
 import com.sunnyweather.android.logic.model.Place
 
+
+/**
+ * ViewModel是逻辑层与UI层之间的桥梁
+ */
 class PlaceViewModel : ViewModel() {
 
     private val searchLiveData = MutableLiveData<String>()
 
     val placeList = ArrayList<Place>()
-
+    //switchMap自动转换数据
     val placeLiveData = Transformations.switchMap(searchLiveData) {query ->
         LogUtil.v("PlaceViewModel", "---placeLiveData的入参为：${query}")
         Respository.searchPlace(query)

@@ -18,7 +18,10 @@ import com.sunnyweather.android.R
 import com.sunnyweather.android.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.fragment_place.*
 
-
+/**
+ * 加载主界面
+ * 因为主界面会复用，所以使用fragment
+ */
 class PlaceFragment : Fragment() {
 
     val viewModel by lazy { ViewModelProviders.of(this).get(PlaceViewModel::class.java) }
@@ -30,13 +33,16 @@ class PlaceFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //加载布局
         return inflater.inflate(R.layout.fragment_place, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         LogUtil.v("PlaceFragment", "---activity is mainactivity 是 ${activity is MainActivity} ,viewModel.isPlaceSaved() 是 ${viewModel.isPlaceSaved()}")
+        val rs1 = activity is MainActivity
+        val rs2 = viewModel.isPlaceSaved()
+        LogUtil.v("PlaceFragment", "是否为MainActivity: ${rs1}, 是否有存储： ${rs2}")
         //读取存储的位置
         if (activity is MainActivity && viewModel.isPlaceSaved()) {
             LogUtil.v("PlaceFragment", "---读取存储的位置信息")
@@ -50,14 +56,16 @@ class PlaceFragment : Fragment() {
             activity?.finish()
             return
         }
-
+        //设置管理器
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
+        //设置适配器
         adapter = PlaceAdapter(this, viewModel.placeList)
         recyclerView.adapter = adapter
         searchPlaceEdit.addTextChangedListener { editable ->
             val content = editable.toString()
             Log.d("PlaceFragment", "---content为：${content}")
+            //监听搜索框的情况
             if (content.isNotEmpty()) {
                 viewModel.searchPlace(content)
             } else {
@@ -68,6 +76,7 @@ class PlaceFragment : Fragment() {
             }
         }
 
+        //监听服务端响应内容
         viewModel.placeLiveData.observe(viewLifecycleOwner, Observer {result ->
             val places = result.getOrNull()
             LogUtil.v("PlaceFragment", "---viewModel.placeLiveData.observe检测的places为${places}")
