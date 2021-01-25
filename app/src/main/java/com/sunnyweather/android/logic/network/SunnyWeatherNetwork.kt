@@ -11,7 +11,9 @@ import kotlin.coroutines.suspendCoroutine
 
 /**
  * 统一的网络数据源统一入口，对所有的网络请求api进行封装
+ * 生成提供功能的方法
  */
+
 
 object SunnyWeatherNetwork {
 

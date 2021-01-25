@@ -17,6 +17,8 @@ import kotlin.coroutines.CoroutineContext
 /**
  * 仓库层
  * 仓库层的主要工作，主要是判断调用方请求的数据是应该从本地获取还是从网络中获取，并将获得数据返回
+ * 有一个汇总的作用，所有logic以外的，只调用这个单例类中的方法即可
+ * 把内部接口封装下，提供对外的接口
  */
 object Respository {
 
@@ -61,6 +63,9 @@ object Respository {
 
 
     //所有的方法都使用fire调用
+    /**
+     * 提取共同点，封装成一个方法
+     */
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
         liveData<Result<T>>(context) {
             val result = try {
